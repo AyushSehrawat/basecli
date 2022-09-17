@@ -1,2 +1,2 @@
 # BaseCli
-A CLI for [Deta Base](https://deta.sh/) [Currently in development]
+A commandline tool to manage deta base from command line.

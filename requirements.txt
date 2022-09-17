@@ -1,3 +1,5 @@
-typer[all]
-requests
+click
+rich
 deta
+requests
+twine
