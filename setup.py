@@ -23,7 +23,7 @@ dependency_links = [x.strip().replace("git+", "") for x in all_reqs if "git+" no
 setup(
     name="basecli",
     description="A simple commandline app trying to make a cli version of deta base",
-    version="0.0.2",
+    version="0.0.3",
     packages=find_packages(),  # list of all packages
     install_requires=install_requires,
     python_requires=">=3.6",  # any python greater than 2.7
@@ -37,7 +37,7 @@ setup(
     long_description_content_type="text/markdown",
     license="MIT",
     url="https://github.com/AyushSehrawat/basecli",
-    download_url="https://github.com/AyushSehrawat/basecli/archive/0.0.2.tar.gz",
+    download_url="https://github.com/AyushSehrawat/basecli/archive/0.0.3.tar.gz",
     dependency_links=dependency_links,
     author_email="mini@minidev.me",
     classifiers=["Programming Language :: Python :: 3.8"],
