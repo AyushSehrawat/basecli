@@ -17,7 +17,7 @@ console = Console()
 
 current_os = platform.system()
 if current_os == "Windows":
-    data_dir = os.path.join(os.getenv("LOCALAPPDATA"), "mini","detabase")
+    data_dir = os.path.join(os.getenv("LOCALAPPDATA"), "mini", "detabase")
 elif current_os == "Linux":
     data_dir = os.path.join(os.getenv("HOME"), ".config", "mini", "detabase")
 else:
@@ -41,6 +41,7 @@ def verify():
     else:
         console.print(f"Config file is invalid! Created config.json in {config_path}", style="bold red")
 
+
 @main.command()
 def showconfig():
     """Show the config file"""
@@ -48,7 +49,7 @@ def showconfig():
     with open(config_path, "r") as f:
         config = json.load(f)
 
-    conf = Table(title="About config.json",show_header=True, header_style="bold magenta", title_style="bold white")
+    conf = Table(title="About config.json", show_header=True, header_style="bold magenta", title_style="bold white")
     conf.add_column("Version", style="dim")
     conf.add_column("Default Project Key", style="dim")
     conf.add_row(config["version"], config["default_project_key"])
@@ -60,12 +61,14 @@ def showconfig():
         projects.add_row(project_key, project_name)
     console.print(projects)
 
+
 @main.command()
 def delete():
     """Delete the config file"""
     config_path, status = validate(data_dir)
     os.remove(config_path)
     console.print("Deleted config file!", style="bold green")
+
 
 @main.command()
 def create():
@@ -83,6 +86,38 @@ def create():
         with open(config_path, "w") as f:
             json.dump(config, f)
         console.print("Done!", style="bold green")
+
+    elif status is True:
+        with open(config_path, "r") as f:
+            config = json.load(f)
+        project_name = console.input("Enter the project name: ")
+        project_key = console.input("Enter the project key: ")
+        config["projects"][project_key] = project_name
+        with open(config_path, "w") as f:
+            json.dump(config, f)
+        console.print("Done!", style="bold green")
+        console.print(f"Path to config file: {config_path}", style="bold green")
+
+
+@main.command()
+def setdefault():
+    """Set a default project"""
+    config_path, status = validate(data_dir)
+    if status is False:
+        console.print("Please create a project first!", style="bold red")
+    elif status is True:
+        with open(config_path, "r") as f:
+            config = json.load(f)
+        base_name = console.input("Enter the project key: ")
+        console.print("Project name should be saved in the config file")
+        project_name = console.input("Enter the project name: ")
+        config["default_base"] = [base_name, project_name]
+        with open(config_path, "w") as f:
+            json.dump(config, f)
+        console.print("Done!", style="bold green")
+
+
+
 
 if __name__ == '__main__':
     args = sys.argv
